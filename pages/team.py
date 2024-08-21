@@ -38,10 +38,13 @@ import streamlit as st
 import streamlit as st
 
 # CSS pour personnaliser les options radio comme des boutons
+import streamlit as st
+
+# CSS pour masquer complètement les indicateurs radio natifs et personnaliser les options
 st.markdown("""
 <style>
 /* Masquer complètement l'indicateur radio natif */
-div.stRadio > div > label > input {
+div.stRadio > div > label > div[data-testid="stMarkdown"] > div {
     display: none;
 }
 
@@ -57,7 +60,6 @@ div.stRadio > div > label > div {
     text-align: center;
     transition: background-color 0.3s ease;
     cursor: pointer;
-    display: inline-block;
     width: 100%;
 }
 
@@ -67,14 +69,16 @@ div.stRadio > div > label > div[data-selected="true"] {
     color: black;
 }
 
-/* Pour ajuster la largeur des boutons */
+/* Pour ajuster la largeur et l'alignement des boutons */
 div.stRadio > div {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 div.stRadio > div > label {
-    flex: 1;
+    flex-grow: 1;
+    flex-basis: calc(50% - 10px); /* Ajuster pour deux colonnes */
 }
 </style>
 """, unsafe_allow_html=True)
