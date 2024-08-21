@@ -4,7 +4,7 @@ import streamlit as st
 from itertools import product
 
 # Chargement des données
-df = pd.read_csv("/Users/jaberhech/Documents/WORK/Projets/LeWagon's Project/projet final/PROJET BETTING/Data finale/bquxjob_712941f7_191652e6851.csv")
+df = pd.read_csv("df_final.csv")
 
 #region Fonctions
 
