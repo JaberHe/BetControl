@@ -32,6 +32,9 @@ st.markdown("---")  # Ligne de séparation pour plus de clarté
 import streamlit as st
 
 # CSS pour personnaliser les options radio comme des boutons
+import streamlit as st
+
+# CSS pour personnaliser les options radio comme des boutons
 st.markdown("""
 <style>
 /* Boutons non sélectionnés */
@@ -70,8 +73,8 @@ mise = st.number_input('💰 Entrez votre mise moyenne (€):', min_value=0, ste
 # Afficher les boutons des équipes avec st.radio
 equipe_selected = st.radio("Sélectionnez votre équipe:", equipes)
 
-# Afficher le résultat du calcul si une équipe est sélectionnée
-if equipe_selected:
+# Vérification de l'équipe sélectionnée et affichage du résultat
+if equipe_selected is not None:
     st.success(f"Équipe sélectionnée: {equipe_selected}")
     result = gain_équipe(equipe_selected, mise)
     st.write(f"🎯 Pour une mise moyenne de {mise}€, vous auriez {'gagné' if result >= 0 else 'perdu'} {abs(result)}€ avec {equipe_selected}.")
