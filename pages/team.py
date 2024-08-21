@@ -29,7 +29,7 @@ st.markdown("---")  # Ligne de séparation pour plus de clarté
 mise = st.number_input('💰 Entrez votre mise moyenne (€):', min_value=0, step=1, format="%d")
 
 # Créer une liste des équipes uniques
-equipes = sorted(df_club['HomeTeam'].append(df_club['AwayTeam']).unique())
+equipes = sorted(pd.concat([df_club['HomeTeam'], df_club['AwayTeam']]).unique())
 
 # Liste déroulante des équipes
 equipe = st.selectbox('Choisissez votre équipe', equipes)
