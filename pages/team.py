@@ -29,10 +29,13 @@ st.markdown("<h3 style='text-align: center;'>Choisissez votre équipe, votre mis
 st.markdown("---")  # Ligne de séparation pour plus de clarté
 
 # CSS pour personnaliser les boutons
+import streamlit as st
+
+# CSS pour personnaliser les options radio comme des boutons
 st.markdown("""
 <style>
 /* Boutons non sélectionnés */
-div.stButton > button {
+div.stRadio > div > label > div {
     background-color: #2f7738;
     color: white;
     border: none;
@@ -40,18 +43,20 @@ div.stButton > button {
     padding: 10px 20px;
     margin: 5px;
     font-size: 18px;
+    text-align: center;
     transition: background-color 0.3s ease;
+    cursor: pointer;
 }
 
-/* Boutons au survol */
-div.stButton > button:hover {
-    background-color: #236028;
-}
-
-/* Bouton sélectionné */
-div.stButton > button[selected=true] {
+/* Boutons sélectionnés */
+div.stRadio > div > label > div[data-selected="true"] {
     background-color: #f4d03f;
     color: black;
+}
+
+/* Supprimer le point radio natif */
+div.stRadio > div > label > input {
+    display: none;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -59,31 +64,14 @@ div.stButton > button[selected=true] {
 # Liste des équipes (exemple)
 equipes = ['Lyon', 'Real Madrid', 'Villarreal', 'Celta Vigo']
 
-# Stocker la sélection de l'utilisateur dans une variable de session
-if 'selected_team' not in st.session_state:
-    st.session_state.selected_team = None
-
 # Entrée pour la mise moyenne
 mise = st.number_input('💰 Entrez votre mise moyenne (€):', min_value=0, step=1, format="%d")
 
-# Afficher les boutons des équipes
-col1, col2, col3 = st.columns(3)
-for i, equipe in enumerate(equipes):
-    if i % 3 == 0:
-        with col1:
-            if st.button(equipe, key=equipe, on_click=lambda e=equipe: st.session_state.update(selected_team=e), selected=(equipe == st.session_state.selected_team)):
-                st.session_state.selected_team = equipe
-    elif i % 3 == 1:
-        with col2:
-            if st.button(equipe, key=equipe, on_click=lambda e=equipe: st.session_state.update(selected_team=e), selected=(equipe == st.session_state.selected_team)):
-                st.session_state.selected_team = equipe
-    else:
-        with col3:
-            if st.button(equipe, key=equipe, on_click=lambda e=equipe: st.session_state.update(selected_team=e), selected=(equipe == st.session_state.selected_team)):
-                st.session_state.selected_team = equipe
+# Afficher les boutons des équipes avec st.radio
+equipe_selected = st.radio("Sélectionnez votre équipe:", equipes)
 
 # Afficher le résultat du calcul si une équipe est sélectionnée
-if st.session_state.selected_team:
-    st.success(f"Équipe sélectionnée: {st.session_state.selected_team}")
-    result = gain_équipe(st.session_state.selected_team, mise)
-    st.write(f"🎯 Pour une mise moyenne de {mise}€, vous auriez {'gagné' if result >= 0 else 'perdu'} {abs(result)}€ avec {st.session_state.selected_team}.")
+if equipe_selected:
+    st.success(f"Équipe sélectionnée: {equipe_selected}")
+    result = gain_équipe(equipe_selected, mise)
+    st.write(f"🎯 Pour une mise moyenne de {mise}€, vous auriez {'gagné' if result >= 0 else 'perdu'} {abs(result)}€ avec {equipe_selected}.")
