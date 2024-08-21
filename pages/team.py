@@ -41,15 +41,13 @@ import streamlit as st
 import streamlit as st
 
 # CSS pour masquer complètement les indicateurs radio natifs et personnaliser les options
+import streamlit as st
+
+# CSS pour personnaliser les boutons comme des cases
 st.markdown("""
 <style>
-/* Masquer complètement l'indicateur radio natif */
-div.stRadio > div > label > div[data-testid="stMarkdown"] > div {
-    display: none;
-}
-
 /* Boutons non sélectionnés */
-div.stRadio > div > label > div {
+div[data-testid="stVerticalBlock"] > div {
     background-color: #2f7738;
     color: white;
     border: none;
@@ -60,25 +58,12 @@ div.stRadio > div > label > div {
     text-align: center;
     transition: background-color 0.3s ease;
     cursor: pointer;
-    width: 100%;
 }
 
-/* Boutons sélectionnés */
-div.stRadio > div > label > div[data-selected="true"] {
+/* Bouton sélectionné */
+div[data-testid="stVerticalBlock"] > div[selected=true] {
     background-color: #f4d03f;
     color: black;
-}
-
-/* Pour ajuster la largeur et l'alignement des boutons */
-div.stRadio > div {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-div.stRadio > div > label {
-    flex-grow: 1;
-    flex-basis: calc(50% - 10px); /* Ajuster pour deux colonnes */
 }
 </style>
 """, unsafe_allow_html=True)
@@ -86,14 +71,22 @@ div.stRadio > div > label {
 # Liste des équipes (exemple)
 equipes = ['Lyon', 'Real Madrid', 'Villarreal', 'Celta Vigo']
 
+# Gérer la sélection via l'état de session
+if 'selected_team' not in st.session_state:
+    st.session_state.selected_team = None
+
 # Entrée pour la mise moyenne
 mise = st.number_input('💰 Entrez votre mise moyenne (€):', min_value=0, step=1, format="%d")
 
-# Afficher les boutons des équipes avec st.radio
-equipe_selected = st.radio("Sélectionnez votre équipe:", equipes)
+# Créer une grille de boutons
+cols = st.columns(2)  # 2 colonnes
+for i, equipe in enumerate(equipes):
+    col = cols[i % 2]  # Alterner entre les colonnes
+    if col.button(equipe, key=equipe):
+        st.session_state.selected_team = equipe
 
-# Vérification de l'équipe sélectionnée et affichage du résultat
-if equipe_selected:
-    st.success(f"Équipe sélectionnée: {equipe_selected}")
-    result = gain_équipe(equipe_selected, mise)
-    st.write(f"🎯 Pour une mise moyenne de {mise}€, vous auriez {'gagné' if result >= 0 else 'perdu'} {abs(result)}€ avec {equipe_selected}.")
+# Afficher le résultat du calcul si une équipe est sélectionnée
+if st.session_state.selected_team:
+    st.success(f"Équipe sélectionnée: {st.session_state.selected_team}")
+    result = gain_équipe(st.session_state.selected_team, mise)
+    st.write(f"🎯 Pour une mise moyenne de {mise}€, vous auriez {'gagné' if result >= 0 else 'perdu'} {abs(result)}€ avec {st.session_state.selected_team}.")
