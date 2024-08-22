@@ -4,6 +4,10 @@ import streamlit as st
 # Chargement des données
 df_club = pd.read_csv("bet_equipe.csv")
 
+# Fonction pour nettoyer les noms en supprimant les espaces en trop et en uniformisant la casse
+def clean_name(name):
+    return name.strip().title()
+
 # Fonction pour calculer les gains ou pertes, le nombre de matchs, et les dates des premiers et derniers matchs
 def gain_équipe(equipe, mise):
     win = 0
@@ -41,10 +45,13 @@ mise = st.number_input('💰 Entrez votre mise moyenne (€):', min_value=0, ste
 
 st.markdown("---")  # Ligne de séparation
 
-# Filtrer les équipes par sport et supprimer les doublons
-equipes_football = sorted(pd.concat([df_club[df_club['sport'] == 'football']['HomeTeam'], df_club[df_club['sport'] == 'football']['AwayTeam']]).unique())
-equipes_basket = sorted(pd.concat([df_club[df_club['sport'] == 'basket']['HomeTeam'], df_club[df_club['sport'] == 'basket']['AwayTeam']]).unique())
-equipes_tennis = sorted(pd.concat([df_club[df_club['sport'] == 'tennis']['HomeTeam'], df_club[df_club['sport'] == 'tennis']['AwayTeam']]).unique())
+# Nettoyer et filtrer les équipes par sport, en supprimant les doublons
+equipes_football = sorted(pd.concat([df_club[df_club['sport'] == 'football']['HomeTeam'], 
+                                     df_club[df_club['sport'] == 'football']['AwayTeam']]).map(clean_name).unique())
+equipes_basket = sorted(pd.concat([df_club[df_club['sport'] == 'basket']['HomeTeam'], 
+                                   df_club[df_club['sport'] == 'basket']['AwayTeam']]).map(clean_name).unique())
+equipes_tennis = sorted(pd.concat([df_club[df_club['sport'] == 'tennis']['HomeTeam'], 
+                                   df_club[df_club['sport'] == 'tennis']['AwayTeam']]).map(clean_name).unique())
 
 # Création de trois colonnes pour les différents sports
 col1, col2, col3 = st.columns(3)
