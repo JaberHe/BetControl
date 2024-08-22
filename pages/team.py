@@ -31,9 +31,9 @@ mise = st.number_input('💰 Entrez votre mise moyenne (€):', min_value=0, ste
 st.markdown("---")  # Ligne de séparation
 
 # Filtrer les équipes par sport
-equipes_football = sorted(pd.concat([df_club[df_club['sport'] == 'Football']['HomeTeam'], df_club[df_club['sport'] == 'Football']['AwayTeam']]).unique())
-equipes_basket = sorted(pd.concat([df_club[df_club['sport'] == 'Basket']['HomeTeam'], df_club[df_club['sport'] == 'Basket']['AwayTeam']]).unique())
-equipes_tennis = sorted(pd.concat([df_club[df_club['sport'] == 'Tennis']['HomeTeam'], df_club[df_club['sport'] == 'Tennis']['AwayTeam']]).unique())
+equipes_football = sorted(pd.concat([df_club[df_club['sport'] == 'football']['HomeTeam'], df_club[df_club['sport'] == 'football']['AwayTeam']]).unique())
+equipes_basket = sorted(pd.concat([df_club[df_club['sport'] == 'basket']['HomeTeam'], df_club[df_club['sport'] == 'basket']['AwayTeam']]).unique())
+equipes_tennis = sorted(pd.concat([df_club[df_club['sport'] == 'tennis']['HomeTeam'], df_club[df_club['sport'] == 'tennis']['AwayTeam']]).unique())
 
 # Création de trois colonnes pour les différents sports
 col1, col2, col3 = st.columns(3)
