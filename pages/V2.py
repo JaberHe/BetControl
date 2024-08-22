@@ -39,14 +39,14 @@ with col2:
     match_info2 = {
         'date': "Aujourd'hui à 20:00",
         'event': 'NBA',
-        'player1': 'Serena Williams',
-        'player2': 'Naomi Osaka',
-        'odds_player1': 1.75,
-        'odds_player2': 2.10
+        'player1': 'Golden State',
+        'player2': 'Miami Heat',
+        'odds_player1': 1.6,
+        'odds_player2': 2.25
     }
 
     st.markdown(f" {match_info2['player1']} vs {match_info2['player2']}")
-    st.markdown(f" {match_info['event']}")
+    st.markdown(f" {match_info2['event']}")
     
     # Colonnes pour les cotes
     col2_1, col2_2 = st.columns(2)
@@ -70,22 +70,22 @@ with col3:
         'odds_draw' : 6 
     }
 
-    st.markdown(f" {match_info2['player1']} vs {match_info2['player2']}")
-    st.markdown(f" {match_info['event']}")
+    st.markdown(f" {match_info3['player1']} vs {match_info3['player2']}")
+    st.markdown(f" {match_info3['event']}")
     
     # Colonnes pour les cotes
-    col2_1, col2_2, col2_3 = st.columns(3)
+    col3_1, col3_2, col3_3 = st.columns(3)
     
-    with col2_1:
-        if st.button(f"{match_info2['odds_player1']} "):
+    with col3_1:
+        if st.button(f"{match_info3['odds_player1']} "):
             st.success(f"Vous avez choisi {match_info3['player1']} avec une cote de {match_info2['odds_player1']}.")
     
-    with col2_2:
-        if st.button(f"{match_info2['odds_player2']}"):
+    with col3_2:
+        if st.button(f"{match_info3['odds_player2']}"):
             st.success(f"Vous avez choisi {match_info3['player2']} avec une cote de {match_info2['odds_player2']}.")
 
-    with col2_3:
-        if st.button(f"{match_info2['odds_draw']}"):
+    with col3_3:
+        if st.button(f"{match_info3['odds_draw']}"):
             st.success(f"Vous avez choisi le match nul avec une cote de {match_info3['odds_player2']}.")
 
 # Ligne de séparation et espace pour la mise en page
