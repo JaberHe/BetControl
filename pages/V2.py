@@ -6,7 +6,7 @@ st.markdown("<h1 style='text-align: center; font-size: 3em;'> Quel parieur es-tu
 # Sous-titre avec une police plus petite et espacée
 st.markdown("<h3 style='text-align: center;'>Nous allons te proposer plusieurs paris par question, clique sur la cote qui t'intéresse le plus !  </h3>", unsafe_allow_html=True)
 
-import streamlit as st
+iimport streamlit as st
 
 # Simuler des données pour plusieurs matchs
 matches = [
@@ -29,8 +29,8 @@ block_size = 3
 start_index = st.session_state.current_block * block_size
 end_index = start_index + block_size
 
-# Définir une variable pour savoir si un choix a été fait
-choice_made = False
+# Définir une variable pour savoir si toutes les cotes du bloc ont été choisies
+all_choices_made = False
 
 # Afficher les matchs actuels
 for match in matches[start_index:end_index]:
@@ -47,9 +47,13 @@ for match in matches[start_index:end_index]:
                 "sport": match['sport'],
                 "block": st.session_state.current_block + 1
             })
-            st.session_state.current_block += 1
-            st.experimental_set_query_params(block=st.session_state.current_block)
-            st.experimental_rerun()
+            all_choices_made = True  # Au moins une cote a été sélectionnée
+
+# Bouton pour passer au bloc suivant
+if all_choices_made and len(st.session_state.selections) == end_index:
+    if st.button("Voir les 3 matchs suivants"):
+        st.session_state.current_block += 1
+        st.experimental_rerun()  # Redémarrer l'application avec le bloc suivant
 
 # Affichage des sélections
 st.markdown("### Vos sélections actuelles")
@@ -59,3 +63,4 @@ for selection in st.session_state.selections:
 # Fin de l'affichage des blocs
 if st.session_state.current_block >= len(matches) // block_size:
     st.markdown("### Vous avez terminé de sélectionner les cotes pour tous les matchs.")
+
