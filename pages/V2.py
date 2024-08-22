@@ -8,6 +8,8 @@ st.markdown("<h3 style='text-align: center;'>Nous allons te proposer plusieurs p
 
 import streamlit as st
 
+import streamlit as st
+
 # CSS personnalisé pour améliorer le design
 st.markdown("""
 <style>
@@ -42,6 +44,12 @@ st.markdown("""
     display: block;
 }
 
+/* Alignement des boutons pour les cotes */
+.cotes-container {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Alignement centré pour les noms des joueurs */
 .player-name {
     font-size: 1.2em;
@@ -69,13 +77,18 @@ for col, match in zip([col1, col2, col3], matches):
             <div class="player-name">{match['player1']}</div>
             <div class="player-name">vs</div>
             <div class="player-name">{match['player2']}</div>
-        </div>
+            <div class="cotes-container">
         """, unsafe_allow_html=True)
         
-        # Affichage des cotes sous forme de boutons
-        for i, odd in enumerate(match['odds']):
-            if st.button(f"{odd}", key=f"{match['player1']}_{match['player2']}_{odd}", help="Cliquez pour sélectionner cette cote"):
-                st.success(f"Vous avez choisi une cote de {odd} pour {match['player1']} vs {match['player2']}.")
+        # Affichage des cotes sous forme de boutons alignés en ligne
+        for odd in match['odds']:
+            st.markdown(f"""
+            <button class="cote-button" onclick="alert('Vous avez choisi une cote de {odd} pour {match['player1']} vs {match['player2']}')">
+                {odd}
+            </button>
+            """, unsafe_allow_html=True)
+
+        st.markdown("</div></div>", unsafe_allow_html=True)
 
 # Ligne de séparation
 st.markdown("---")
