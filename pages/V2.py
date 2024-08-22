@@ -35,7 +35,12 @@ st.markdown("""
     margin-bottom: 10px;
 }
 
-/* Style pour les boutons de cote */
+/* Style pour centrer les cotes */
+.cote-button-container {
+    display: flex;
+    justify-content: center;
+}
+
 .cote-button {
     font-size: 1.2em;
     text-align: center;
@@ -45,8 +50,7 @@ st.markdown("""
     border-radius: 10px;
     padding: 10px;
     cursor: pointer;
-    display: block;
-    width: 100%; /* S'assurer que le bouton prend toute la largeur */
+    width: 80%; /* Ajuste la largeur pour un bon alignement */
     margin-top: 5px; /* Espacement au-dessus */
 }
 
@@ -77,8 +81,11 @@ for col, match in zip([col1, col2, col3], matches):
         cols = st.columns(len(match['odds']))
         for i, odd in enumerate(match['odds']):
             with cols[i]:
-                if st.button(f"{odd}", key=f"{match['player1']}_{match['player2']}_{odd}"):
-                    st.success(f"Vous avez choisi une cote de {odd} pour {match['player1']} vs {match['player2']}.")
+                st.markdown(f"""
+                <div class="cote-button-container">
+                    <button class="cote-button">{odd}</button>
+                </div>
+                """, unsafe_allow_html=True)
 
 # Ligne de séparation
 st.markdown("---")
