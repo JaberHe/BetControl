@@ -47,12 +47,9 @@ for match in matches[start_index:end_index]:
                 "sport": match['sport'],
                 "block": st.session_state.current_block + 1
             })
-            choice_made = True  # Un choix a été fait
-
-# Passer automatiquement au bloc suivant après la sélection d'une cote
-if choice_made:
-    st.session_state.current_block += 1
-    st.experimental_rerun()  # Recharger l'application pour afficher les 3 matchs suivants
+            st.session_state.current_block += 1
+            st.experimental_set_query_params(block=st.session_state.current_block)
+            st.experimental_rerun()
 
 # Affichage des sélections
 st.markdown("### Vos sélections actuelles")
