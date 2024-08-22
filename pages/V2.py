@@ -22,42 +22,38 @@ matches = [
 if 'current_block' not in st.session_state:
     st.session_state.current_block = 0  # Index du bloc actuel
 if 'selections' not in st.session_state:
-    st.session_state.selections = []  # Stocker les sélections
+    st.session_state.selections = {}  # Stocker les sélections par match
 
 # Afficher le bloc actuel de 3 matchs
 block_size = 3
 start_index = st.session_state.current_block * block_size
 end_index = start_index + block_size
 
-# Définir une variable pour savoir si toutes les cotes du bloc ont été choisies
-all_choices_made = False
-
 # Afficher les matchs actuels
 for match in matches[start_index:end_index]:
+    match_key = f"{match['player1']} vs {match['player2']}"
     st.markdown(f"### {match['player1']} vs {match['player2']}")
     st.markdown(f"**Sport:** {match['sport']}")
     cols = st.columns(len(match['odds']))
     for i, odd in enumerate(match['odds']):
         if cols[i].button(f"{odd}"):
-            # Stocker la sélection dans st.session_state
-            st.session_state.selections.append({
+            # Stocker ou mettre à jour la sélection pour ce match
+            st.session_state.selections[match_key] = {
                 "player1": match['player1'],
                 "player2": match['player2'],
                 "selected_odd": odd,
-                "sport": match['sport'],
-                "block": st.session_state.current_block + 1
-            })
-            all_choices_made = True  # Au moins une cote a été sélectionnée
+                "sport": match['sport']
+            }
 
-# Bouton pour passer au bloc suivant
-if all_choices_made and len(st.session_state.selections) == end_index:
+# Affichage du bouton "Suivant" si toutes les cotes du bloc sont sélectionnées
+if len(st.session_state.selections) >= end_index:
     if st.button("Voir les 3 matchs suivants"):
         st.session_state.current_block += 1
         st.experimental_rerun()  # Redémarrer l'application avec le bloc suivant
 
-# Affichage des sélections
+# Affichage des sélections (dernière sélection par match)
 st.markdown("### Vos sélections actuelles")
-for selection in st.session_state.selections:
+for match_key, selection in st.session_state.selections.items():
     st.write(f"Match: {selection['player1']} vs {selection['player2']}, Cote: {selection['selected_odd']}, Sport: {selection['sport']}")
 
 # Fin de l'affichage des blocs
