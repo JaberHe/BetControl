@@ -15,7 +15,7 @@ def gain_équipe(equipe, mise):
             win = win + row["odd_W"]
         if equipe in row["HomeTeam"] or equipe in row["AwayTeam"]:
             loss = loss + 1
-            dates.append(row["date"])  # Ajouter la date du match à la liste
+            dates.append(row["Date"])  # Utilisation du nom correct de la colonne
     
     balance = win - loss
     result = balance * mise
