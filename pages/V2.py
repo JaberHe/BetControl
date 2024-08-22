@@ -8,98 +8,54 @@ st.markdown("<h3 style='text-align: center;'>Nous allons te proposer plusieurs p
 
 import streamlit as st
 
-# Utiliser st.session_state pour stocker les sélections de cotes
-if 'selected_odds' not in st.session_state:
-    st.session_state.selected_odds = {}
-
-# CSS personnalisé pour améliorer le design
-st.markdown("""
-<style>
-/* Style pour les box avec bordure rouge */
-.match-box {
-    background-color: #1e1e1e; /* Couleur de fond */
-    padding: 20px;
-    border-radius: 10px;
-    border: 2px solid red; /* Bordure rouge fine */
-    margin-bottom: 20px;
-}
-
-/* Centrage du texte */
-.centered-text {
-    text-align: center;
-    font-size: 1.2em;
-    color: white;
-}
-
-/* Alignement centré pour les noms des joueurs */
-.player-name {
-    font-size: 1.2em;
-    text-align: center;
-    color: white;
-    margin-bottom: 10px;
-}
-
-/* Style pour centrer les cotes */
-.cote-button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.cote-button {
-    font-size: 1.2em;
-    text-align: center;
-    color: #f4d03f;
-    background-color: #333333;
-    border: none;
-    border-radius: 10px;
-    padding: 10px;
-    cursor: pointer;
-    width: 90%; /* Ajuste la largeur pour un bon alignement */
-    margin: 5px; /* Espacement autour */
-}
-
-</style>
-""", unsafe_allow_html=True)
-
-# Exemple de contenu pour les 6 matchs
+# Simuler des données pour plusieurs matchs
 matches = [
-    {"player1": "Novak Djokovic", "player2": "Carlos Alcaraz", "odds": [1.43, 2.85]},
-    {"player1": "Rafael Nadal", "player2": "Roger Federer", "odds": [1.50, 2.75]},
-    {"player1": "Paris Saint-Germain", "player2": "Real Madrid", "odds": [1.70, 3.50, 4.00]},
-    {"player1": "Serena Williams", "player2": "Naomi Osaka", "odds": [1.60, 2.20]},
-    {"player1": "Andy Murray", "player2": "Stefanos Tsitsipas", "odds": [1.80, 2.10]},
-    {"player1": "Iga Swiatek", "player2": "Aryna Sabalenka", "odds": [1.55, 2.40]}
+    {"player1": "Novak Djokovic", "player2": "Carlos Alcaraz", "odds": [1.43, 2.85], "sport": "Tennis"},
+    {"player1": "Rafael Nadal", "player2": "Roger Federer", "odds": [1.50, 2.75], "sport": "Tennis"},
+    {"player1": "Paris Saint-Germain", "player2": "Real Madrid", "odds": [1.70, 3.50, 4.00], "sport": "Football"},
+    {"player1": "Serena Williams", "player2": "Naomi Osaka", "odds": [1.60, 2.20], "sport": "Tennis"},
+    {"player1": "Andy Murray", "player2": "Stefanos Tsitsipas", "odds": [1.80, 2.10], "sport": "Tennis"},
+    {"player1": "Iga Swiatek", "player2": "Aryna Sabalenka", "odds": [1.55, 2.40], "sport": "Tennis"}
 ]
 
-# Affichage des 6 matchs en 2 rangées de 3 colonnes
-for i in range(0, len(matches), 3):
-    col1, col2, col3 = st.columns(3)
+# Variable pour suivre l'état de l'application
+if 'current_block' not in st.session_state:
+    st.session_state.current_block = 0  # Index du bloc actuel
+if 'selections' not in st.session_state:
+    st.session_state.selections = []  # Stocker les sélections
 
-    for col, match in zip([col1, col2, col3], matches[i:i+3]):
-        with col:
-            st.markdown(f"""
-            <div class="match-box">
-                <div class="player-name">{match['player1']}</div>
-                <div class="player-name">vs</div>
-                <div class="player-name">{match['player2']}</div>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            # Utilisation de colonnes pour aligner les cotes sur une seule ligne
-            cols = st.columns(len(match['odds']))
-            for j, odd in enumerate(match['odds']):
-                with cols[j]:
-                    if st.button(f"{odd}", key=f"{match['player1']}_{match['player2']}_{odd}"):
-                        # Stocker la cote sélectionnée pour ce match
-                        st.session_state.selected_odds[f"{match['player1']}_{match['player2']}"] = {"odd": odd, "player1": match['player1'], "player2": match['player2']}
+# Afficher le bloc actuel de 3 matchs
+block_size = 3
+start_index = st.session_state.current_block * block_size
+end_index = start_index + block_size
 
-# Affichage de la dernière sélection
-st.markdown("### Sélection actuelle")
-if st.session_state.selected_odds:
-    last_selected_match = list(st.session_state.selected_odds.keys())[-1]
-    last_selected_info = st.session_state.selected_odds[last_selected_match]
-    st.write(f"Match: {last_selected_info['player1']} vs {last_selected_info['player2']} - Cote sélectionnée: {last_selected_info['odd']}")
+# Afficher les matchs actuels
+for match in matches[start_index:end_index]:
+    st.markdown(f"### {match['player1']} vs {match['player2']}")
+    st.markdown(f"**Sport:** {match['sport']}")
+    cols = st.columns(len(match['odds']))
+    for i, odd in enumerate(match['odds']):
+        if cols[i].button(f"{odd}"):
+            # Stocker la sélection dans st.session_state
+            st.session_state.selections.append({
+                "player1": match['player1'],
+                "player2": match['player2'],
+                "selected_odd": odd,
+                "sport": match['sport'],
+                "block": st.session_state.current_block + 1
+            })
+            st.success(f"Sélectionnez {odd} pour {match['player1']} vs {match['player2']}.")
 
-# Ligne de séparation
-st.markdown("---")
+# Passer au bloc suivant après la sélection de tous les matchs du bloc actuel
+if len(st.session_state.selections) == end_index:
+    if st.button("Voir les 3 matchs suivants"):
+        st.session_state.current_block += 1
+
+# Affichage des sélections
+st.markdown("### Vos sélections actuelles")
+for selection in st.session_state.selections:
+    st.write(f"Match: {selection['player1']} vs {selection['player2']}, Cote: {selection['selected_odd']}, Sport: {selection['sport']}")
+
+# Fin de l'affichage des blocs
+if st.session_state.current_block >= len(matches) // block_size:
+    st.markdown("### Vous avez terminé de sélectionner les cotes pour tous les matchs.")
