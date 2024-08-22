@@ -6,7 +6,7 @@ st.markdown("<h1 style='text-align: center; font-size: 3em;'> Quel parieur es-tu
 # Sous-titre avec une police plus petite et espacée
 st.markdown("<h3 style='text-align: center;'>Nous allons te proposer plusieurs paris par question, clique sur la cote qui t'intéresse le plus !  </h3>", unsafe_allow_html=True)
 
-iimport streamlit as st
+import streamlit as st
 
 # Simuler des données pour plusieurs matchs
 matches = [
