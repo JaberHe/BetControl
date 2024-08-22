@@ -28,17 +28,37 @@ st.markdown("---")  # Ligne de séparation pour plus de clarté
 # Entrée pour la mise moyenne
 mise = st.number_input('💰 Entrez votre mise moyenne (€):', min_value=0, step=1, format="%d")
 
-# Créer une liste des équipes uniques
-equipes = sorted(pd.concat([df_club['HomeTeam'], df_club['AwayTeam']]).unique())
+st.markdown("---")  # Ligne de séparation
 
-# Liste déroulante des équipes
-equipe = st.selectbox('Choisissez votre équipe', equipes)
+# Filtrer les équipes par sport
+equipes_football = sorted(pd.concat([df_club[df_club['sport'] == 'Football']['HomeTeam'], df_club[df_club['sport'] == 'Football']['AwayTeam']]).unique())
+equipes_basket = sorted(pd.concat([df_club[df_club['sport'] == 'Basket']['HomeTeam'], df_club[df_club['sport'] == 'Basket']['AwayTeam']]).unique())
+equipes_tennis = sorted(pd.concat([df_club[df_club['sport'] == 'Tennis']['HomeTeam'], df_club[df_club['sport'] == 'Tennis']['AwayTeam']]).unique())
+
+# Création de trois colonnes pour les différents sports
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown("### ⚽ Football")
+    equipe_football = st.selectbox('Choisissez votre équipe de football', equipes_football)
+
+with col2:
+    st.markdown("### 🏀 Basket")
+    equipe_basket = st.selectbox('Choisissez votre équipe de basket', equipes_basket)
+
+with col3:
+    st.markdown("### 🎾 Tennis")
+    equipe_tennis = st.selectbox('Choisissez votre équipe de tennis', equipes_tennis)
 
 st.markdown("---")  # Ligne de séparation
 
 # Bouton pour soumettre le formulaire
 if st.button('Calculer'):
-    result = gain_équipe(equipe, mise)
+    # Déterminer quelle équipe a été sélectionnée
+    equipe_selectionnee = equipe_football or equipe_basket or equipe_tennis
+    
+    # Calculer le résultat
+    result = gain_équipe(equipe_selectionnee, mise)
     
     # Affichage du résultat
-    st.write(f"💸 Pour une mise moyenne de **{mise}€**, vous auriez {'gagné' if result >= 0 else 'perdu'} **{abs(result)}€** en pariant sur **{equipe}**.")
+    st.write(f"💸 Pour une mise moyenne de **{mise}€**, vous auriez {'gagné' if result >= 0 else 'perdu'} **{abs(result)}€** en pariant sur **{equipe_selectionnee}**.")
