@@ -14,32 +14,32 @@ import streamlit as st
 match_info = {
     'date': "Aujourd'hui à 18:15",
     'event': 'ATP - US Open, Qualifications',
-    'player1': 'Joao Fonseca',
-    'player2': 'Eliot Spizzirri',
+    'player1': 'Novak Djokovic',
+    'player2': 'Carlos Alcaraz',
     'odds_player1': 1.43,
-    'odds_player2': 2.45
+    'odds_player2': 2.85
 }
 
-# Affichage du titre et de l'événement
-st.markdown(f"### {match_info['date']}")
-st.markdown(f"**{match_info['event']}**")
 
 # Structure de la boxe avec les deux joueurs et les cotes
 col1, col2 = st.columns([3, 1])
 
 with col1:
-    st.markdown(f"#### {match_info['player1']} - {match_info['player2']}")
+    st.markdown(f"#### {match_info['player1']}")
+
+with col2:
+    st.markdown(f"#### {match_info['player2']}")
 
 # Colonnes pour les cotes
 col1, col2 = st.columns(2)
 
 # Affichage des cotes et boutons pour chaque joueur
 with col1:
-    if st.button(f"{match_info['player1']} @ {match_info['odds_player1']}"):
+    if st.button(f"{match_info['odds_player1']}"):
         st.success(f"Vous avez choisi {match_info['player1']} avec une cote de {match_info['odds_player1']}.")
 
 with col2:
-    if st.button(f"{match_info['player2']} @ {match_info['odds_player2']}"):
+    if st.button(f"{match_info['odds_player2']}"):
         st.success(f"Vous avez choisi {match_info['player2']} avec une cote de {match_info['odds_player2']}.")
 
 # Ligne de séparation et espace pour la mise en page
