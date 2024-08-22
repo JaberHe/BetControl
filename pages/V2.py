@@ -74,7 +74,7 @@ for col, match in zip([col1, col2, col3], matches):
         
         # Affichage des cotes sous forme de boutons
         for i, odd in enumerate(match['odds']):
-            if st.button(f"Cote {odd}", key=f"{match['player1']}_{match['player2']}_{odd}", help="Cliquez pour sélectionner cette cote"):
+            if st.button(f"{odd}", key=f"{match['player1']}_{match['player2']}_{odd}", help="Cliquez pour sélectionner cette cote"):
                 st.success(f"Vous avez choisi une cote de {odd} pour {match['player1']} vs {match['player2']}.")
 
 # Ligne de séparation
