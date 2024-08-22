@@ -140,16 +140,16 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Exemple de contenu pour les 3 matchs
-matches = [
-    {"player1": "Novak Djokovic", "player2": "Carlos Alcaraz", "odds": [1.43, 2.85]},
-    {"player1": "Rafael Nadal", "player2": "Roger Federer", "odds": [1.50, 2.75]},
-    {"player1": "Paris Saint-Germain", "player2": "Real Madrid", "odds": [1.70, 3.50, 4.00]}  # Exemple avec 3 cotes pour un match de foot
+matches_1 = [
+    {"player1": "Simona Halep", "player2": "Iga Swiatek", "odds": [1.75, 2.2]},
+    {"player1": "Houston Rockets", "player2": "New_York Knicks", "odds": [1.80, 1.85]},
+    {"player1": "Marseille", "player2": "Rennes", "odds": [1.85, 3.30, 3.75]}  # Exemple avec 3 cotes pour un match de foot
 ]
 
 # Affichage des 3 matchs en colonnes
-col1, col2, col3 = st.columns(3)
+col11, col22, col33 = st.columns(3)
 
-for col, match in zip([col1, col2, col3], matches):
+for col, match in zip([col11, col22, col33], matches_1):
     with col:
         st.markdown(f"""
         <div class="match-box">
