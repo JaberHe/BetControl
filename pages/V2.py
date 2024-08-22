@@ -6,6 +6,7 @@ st.markdown("<h1 style='text-align: center; font-size: 3em;'> Quel parieur es-tu
 # Sous-titre avec une police plus petite et espacée
 st.markdown("<h3 style='text-align: center;'>Nous allons te proposer plusieurs paris par question, clique sur la cote qui t'intéresse le plus !  </h3>", unsafe_allow_html=True)
 
+import streamlit as st
 
 # CSS personnalisé pour améliorer le design
 st.markdown("""
@@ -27,28 +28,35 @@ st.markdown("""
 }
 
 /* Alignement centré pour les cotes */
-.cote {
-    font-size: 1.5em;
+.cote-button {
+    font-size: 1.2em;
     text-align: center;
     color: #f4d03f;
     margin-top: 10px;
+    width: 100%; /* S'assurer que le bouton prend toute la largeur */
+    background-color: #333333;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    display: block;
 }
 
 /* Alignement centré pour les noms des joueurs */
 .player-name {
-    font-size: 1.5em;
+    font-size: 1.2em;
     text-align: center;
     color: white;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 </style>
 """, unsafe_allow_html=True)
 
 # Exemple de contenu pour les 3 matchs
 matches = [
-    {"player1": "Novak Djokovic", "player2": "Carlos Alcaraz", "odds_player1": 1.43, "odds_player2": 2.85},
-    {"player1": "Rafael Nadal", "player2": "Roger Federer", "odds_player1": 1.50, "odds_player2": 2.75},
-    {"player1": "Serena Williams", "player2": "Naomi Osaka", "odds_player1": 1.60, "odds_player2": 2.20}
+    {"player1": "Novak Djokovic", "player2": "Carlos Alcaraz", "odds": [1.43, 2.85]},
+    {"player1": "Rafael Nadal", "player2": "Roger Federer", "odds": [1.50, 2.75]},
+    {"player1": "Paris Saint-Germain", "player2": "Real Madrid", "odds": [1.70, 3.50, 4.00]}  # Exemple avec 3 cotes pour un match de foot
 ]
 
 # Affichage des 3 matchs en colonnes
@@ -61,22 +69,13 @@ for col, match in zip([col1, col2, col3], matches):
             <div class="player-name">{match['player1']}</div>
             <div class="player-name">vs</div>
             <div class="player-name">{match['player2']}</div>
-            <div class="cote">{match['odds_player1']} | {match['odds_player2']}</div>
         </div>
         """, unsafe_allow_html=True)
-
-# Bouton pour chaque match, avec alignement centré
-with col1:
-    if st.button(f"Cote {matches[0]['odds_player1']}"):
-        st.success(f"Vous avez choisi {matches[0]['player1']} avec une cote de {matches[0]['odds_player1']}.")
-
-with col2:
-    if st.button(f"Cote {matches[1]['odds_player1']}"):
-        st.success(f"Vous avez choisi {matches[1]['player1']} avec une cote de {matches[1]['odds_player1']}.")
-
-with col3:
-    if st.button(f"Cote {matches[2]['odds_player1']}"):
-        st.success(f"Vous avez choisi {matches[2]['player1']} avec une cote de {matches[2]['odds_player1']}.")
+        
+        # Affichage des cotes sous forme de boutons
+        for i, odd in enumerate(match['odds']):
+            if st.button(f"Cote {odd}", key=f"{match['player1']}_{match['player2']}_{odd}", help="Cliquez pour sélectionner cette cote"):
+                st.success(f"Vous avez choisi une cote de {odd} pour {match['player1']} vs {match['player2']}.")
 
 # Ligne de séparation
 st.markdown("---")
