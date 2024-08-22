@@ -43,6 +43,7 @@ st.markdown("""
 .cote-button-container {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .cote-button {
@@ -54,9 +55,10 @@ st.markdown("""
     border-radius: 10px;
     padding: 10px;
     cursor: pointer;
-    width: 80%; /* Ajuste la largeur pour un bon alignement */
-    margin-top: 5px; /* Espacement au-dessus */
+    width: 90%; /* Ajuste la largeur pour un bon alignement */
+    margin: 5px; /* Espacement autour */
 }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -89,13 +91,15 @@ for i in range(0, len(matches), 3):
             for j, odd in enumerate(match['odds']):
                 with cols[j]:
                     if st.button(f"{odd}", key=f"{match['player1']}_{match['player2']}_{odd}"):
-                        st.session_state.selected_odds[f"{match['player1']}_{match['player2']}"] = odd
-                        st.success(f"Vous avez choisi une cote de {odd} pour {match['player1']} vs {match['player2']}.")
+                        # Stocker la cote sélectionnée pour ce match
+                        st.session_state.selected_odds[f"{match['player1']}_{match['player2']}"] = {"odd": odd, "player1": match['player1'], "player2": match['player2']}
 
-# Affichage des sélections finales
-st.markdown("### Sélections finales")
-for match_key, selected_odd in st.session_state.selected_odds.items():
-    st.write(f"Match: {match_key.replace('_', ' vs ')} - Cote sélectionnée: {selected_odd}")
+# Affichage de la dernière sélection
+st.markdown("### Sélection actuelle")
+if st.session_state.selected_odds:
+    last_selected_match = list(st.session_state.selected_odds.keys())[-1]
+    last_selected_info = st.session_state.selected_odds[last_selected_match]
+    st.write(f"Match: {last_selected_info['player1']} vs {last_selected_info['player2']} - Cote sélectionnée: {last_selected_info['odd']}")
 
 # Ligne de séparation
 st.markdown("---")
