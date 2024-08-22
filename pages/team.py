@@ -41,7 +41,7 @@ mise = st.number_input('💰 Entrez votre mise moyenne (€):', min_value=0, ste
 
 st.markdown("---")  # Ligne de séparation
 
-# Filtrer les équipes par sport
+# Filtrer les équipes par sport et supprimer les doublons
 equipes_football = sorted(pd.concat([df_club[df_club['sport'] == 'football']['HomeTeam'], df_club[df_club['sport'] == 'football']['AwayTeam']]).unique())
 equipes_basket = sorted(pd.concat([df_club[df_club['sport'] == 'basket']['HomeTeam'], df_club[df_club['sport'] == 'basket']['AwayTeam']]).unique())
 equipes_tennis = sorted(pd.concat([df_club[df_club['sport'] == 'tennis']['HomeTeam'], df_club[df_club['sport'] == 'tennis']['AwayTeam']]).unique())
