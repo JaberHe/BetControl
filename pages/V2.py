@@ -20,8 +20,8 @@ with col1:
         'odds_player2': 2.10
     }
 
-    st.markdown(f"## {match_info['player1']} vs {match_info['player2']}")
-    st.markdown(f"# {match_info['event']}")
+    st.markdown(f" {match_info['player1']} vs {match_info['player2']}")
+    st.markdown(f" {match_info['event']}")
     
     # Colonnes pour les cotes
     col1_1, col1_2 = st.columns(2)
@@ -45,8 +45,8 @@ with col2:
         'odds_player2': 2.10
     }
 
-    st.markdown(f"## {match_info2['player1']} vs {match_info2['player2']}")
-    st.markdown(f"# {match_info['event']}")
+    st.markdown(f" {match_info2['player1']} vs {match_info2['player2']}")
+    st.markdown(f" {match_info['event']}")
     
     # Colonnes pour les cotes
     col2_1, col2_2 = st.columns(2)
@@ -70,22 +70,23 @@ with col3:
         'odds_draw' : 6 
     }
 
-    st.markdown(f"## {match_info2['player1']} vs {match_info2['player2']}")
+    st.markdown(f" {match_info2['player1']} vs {match_info2['player2']}")
+    st.markdown(f" {match_info['event']}")
     
     # Colonnes pour les cotes
     col2_1, col2_2, col2_3 = st.columns(3)
     
     with col2_1:
         if st.button(f"{match_info2['odds_player1']} "):
-            st.success(f"Vous avez choisi {match_info2['player1']} avec une cote de {match_info2['odds_player1']}.")
+            st.success(f"Vous avez choisi {match_info3['player1']} avec une cote de {match_info2['odds_player1']}.")
     
     with col2_2:
         if st.button(f"{match_info2['odds_player2']}"):
-            st.success(f"Vous avez choisi {match_info2['player2']} avec une cote de {match_info2['odds_player2']}.")
+            st.success(f"Vous avez choisi {match_info3['player2']} avec une cote de {match_info2['odds_player2']}.")
 
     with col2_3:
         if st.button(f"{match_info2['odds_draw']}"):
-            st.success(f"Vous avez choisi le match nul avec une cote de {match_info2['odds_player2']}.")
+            st.success(f"Vous avez choisi le match nul avec une cote de {match_info3['odds_player2']}.")
 
 # Ligne de séparation et espace pour la mise en page
 st.markdown("---")
