@@ -4,9 +4,45 @@ import streamlit as st
 # Chargement des données
 df_club = pd.read_csv("bet_equipe.csv")
 
-# Fonction pour nettoyer les noms en supprimant les espaces en trop et en uniformisant la casse
-def clean_name(name):
-    return name.strip().title()
+# Dictionnaire de correspondance des abréviations d'équipes NBA avec leurs noms complets
+nba_teams = {
+    "hou": "Houston Rockets",
+    "lal": "Los Angeles Lakers",
+    "bos": "Boston Celtics",
+    "mia": "Miami Heat",
+    "gs": "Golden State Warriors",
+    "den" : "Denver Nuggets",
+    "min" : "Minnessota Timberwolwes",
+    "mem" : "Memphis Grizzlies",
+    "lac" : "Los Angeles Clippers",
+    "sa" : "San Antonio Spurs",
+    "utah" : "Utah Jazz",
+    "orl" : "Orlando Magic",
+    "sac" : "Sacramento Kings",
+    "no" : "New Orleans Pelicans",
+    "ny" : "New York Knicks",
+    "bkn" : "Brooklyn Nets",
+    "ind" : "Indiana Pacers",
+    "okc" : "Oklahoma City Thunder",
+    "phx" : "Phoenix Suns",
+    "chi" : "Chicago Bulls",
+    "cha" : "Charlotte Hornets",
+    "phi" : "Philadelpie Sixers",
+    "por" : "Portland Trailblazzers",
+    "cle" : "Cleveland Cavaliers",
+    "wsh" : "Washington Wizzards",
+    "dal" : "Dallas Mavericks",
+    "det" : "Detroit Pistons",
+    "tor" : "Toronto Raptors",
+    "mil" : "Milwaukee Bucks",
+    "atl" : "Atlanta Hawks"
+
+    # Ajoute ici toutes les autres correspondances
+}
+
+# Remplacer les abréviations par les noms complets dans les colonnes HomeTeam et AwayTeam pour les équipes de basket
+df_club.loc[df_club['sport'] == 'basket', 'HomeTeam'] = df_club.loc[df_club['sport'] == 'basket', 'HomeTeam'].replace(nba_teams)
+df_club.loc[df_club['sport'] == 'basket', 'AwayTeam'] = df_club.loc[df_club['sport'] == 'basket', 'AwayTeam'].replace(nba_teams)
 
 # Fonction pour calculer les gains ou pertes, le nombre de matchs, et les dates des premiers et derniers matchs
 def gain_équipe(equipe, mise):
@@ -47,11 +83,11 @@ st.markdown("---")  # Ligne de séparation
 
 # Nettoyer et filtrer les équipes par sport, en supprimant les doublons
 equipes_football = sorted(pd.concat([df_club[df_club['sport'] == 'football']['HomeTeam'], 
-                                     df_club[df_club['sport'] == 'football']['AwayTeam']]).map(clean_name).unique())
+                                     df_club[df_club['sport'] == 'football']['AwayTeam']]).map(str.strip).unique())
 equipes_basket = sorted(pd.concat([df_club[df_club['sport'] == 'basket']['HomeTeam'], 
-                                   df_club[df_club['sport'] == 'basket']['AwayTeam']]).map(clean_name).unique())
+                                   df_club[df_club['sport'] == 'basket']['AwayTeam']]).map(str.strip).unique())
 equipes_tennis = sorted(pd.concat([df_club[df_club['sport'] == 'tennis']['HomeTeam'], 
-                                   df_club[df_club['sport'] == 'tennis']['AwayTeam']]).map(clean_name).unique())
+                                   df_club[df_club['sport'] == 'tennis']['AwayTeam']]).map(str.strip).unique())
 
 # Création de trois colonnes pour les différents sports
 col1, col2, col3 = st.columns(3)
