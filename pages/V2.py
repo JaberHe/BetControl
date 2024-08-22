@@ -6,154 +6,77 @@ st.markdown("<h1 style='text-align: center; font-size: 3em;'> Quel parieur es-tu
 # Sous-titre avec une police plus petite et espacée
 st.markdown("<h3 style='text-align: center;'>Nous allons te proposer plusieurs paris par question, clique sur la cote qui t'intéresse le plus !  </h3>", unsafe_allow_html=True)
 
-# Exemple avec deux box côte à côte
-col1, col2, col3 = st.columns(3)  # Trois colonnes côte à côte
 
-# Première boxe
-with col1:
-    match_info = {
-        'date': "Aujourd'hui à 18:15",
-        'event': 'US Open',
-        'player1': 'Novak Djokovic',
-        'player2': 'Carlos Alcaraz',
-        'odds_player1': 1.70,
-        'odds_player2': 2.10
-    }
-
-    st.markdown(f" {match_info['player1']} vs {match_info['player2']}")
-    st.markdown(f"""
-<div style="text-align: center;">
-    {match_info['event']}
-</div>
-""", unsafe_allow_html=True)
-    
-    # Colonnes pour les cotes
-    col1_1, col1_2 = st.columns(2)
-    
-    with col1_1:
-        if st.button(f"{match_info['odds_player1']}"):
-            st.success(f"✅")
-    
-    with col1_2:
-        if st.button(f"{match_info['odds_player2']}"):
-            st.success(f"✅")
-
-# Deuxième boxe
-with col2:
-    match_info2 = {
-        'date': "Aujourd'hui à 20:00",
-        'event': 'NBA',
-        'player1': 'Golden State',
-        'player2': 'Miami Heat',
-        'odds_player1': 1.6,
-        'odds_player2': 2.25
-    }
-
-    st.markdown(f" {match_info2['player1']} vs {match_info2['player2']}")
-    st.markdown(f"""
-<div style="text-align: center;">
-    {match_info2['event']}
-</div>
-""", unsafe_allow_html=True)
-    
-    # Colonnes pour les cotes
-    col2_1, col2_2 = st.columns(2)
-    
-    with col2_1:
-        if st.button(f"{match_info2['odds_player1']}"):
-            st.success(f"✅")
-    
-    with col2_2:
-        if st.button(f"{match_info2['odds_player2']}"):
-            st.success(f"✅")
-
-with col3:
-    match_info3 = {
-        'date': "Aujourd'hui à 20:00",
-        'event': 'Ligue 1',
-        'player1': 'Paris SG',
-        'player2': 'Montpellier',
-        'odds_player1': 1.29,
-        'odds_player2': 8.50,
-        'odds_draw' : 6 
-    }
-
-    st.markdown(f" {match_info3['player1']} vs {match_info3['player2']}")
-    st.markdown(f"""
-<div style="text-align: center;">
-    {match_info3['event']}
-</div>
-""", unsafe_allow_html=True)
-    
-    # Colonnes pour les cotes
-    col3_1, col3_2, col3_3 = st.columns(3)
-    
-    with col3_1:
-        if st.button(f"{match_info3['odds_player1']} "):
-            st.success(f"✅")
-    
-    with col3_2:
-        if st.button(f"{match_info3['odds_player2']}"):
-            st.success(f"✅")
-
-    with col3_3:
-        if st.button(f"{match_info3['odds_draw']}"):
-            st.success(f"✅")
-
-# Ligne de séparation et espace pour la mise en page
-st.markdown("---")
-
-# CSS personnalisé pour le design
+# CSS personnalisé pour améliorer le design
 st.markdown("""
 <style>
-/* Style de la box principale */
-.box {
-    background-color: #1e1e1e;
-    padding: 10px;
+/* Style pour les box avec bordure rouge */
+.match-box {
+    background-color: #1e1e1e; /* Couleur de fond */
+    padding: 20px;
     border-radius: 10px;
+    border: 2px solid red; /* Bordure rouge fine */
     margin-bottom: 20px;
 }
 
-/* Style pour la ligne "Pari combiné" */
-.header {
+/* Centrage du texte */
+.centered-text {
+    text-align: center;
+    font-size: 1.2em;
+    color: white;
+}
+
+/* Alignement centré pour les cotes */
+.cote {
     font-size: 1.5em;
     text-align: center;
-    margin-bottom: 10px;
-    background-color: #333333;
-    padding: 10px;
-    border-radius: 10px;
-    color: white;
-}
-
-/* Style pour les box imbriquées */
-.sub-box {
-    background-color: #2e2e2e;
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    color: white;
-}
-
-/* Style pour les cotes */
-.cote {
-    font-size: 1.2em;
-    text-align: right;
     color: #f4d03f;
+    margin-top: 10px;
+}
+
+/* Alignement centré pour les noms des joueurs */
+.player-name {
+    font-size: 1.5em;
+    text-align: center;
+    color: white;
+    margin-bottom: 5px;
 }
 </style>
 """, unsafe_allow_html=True)
 
-# Affichage du titre principal de la box "Pari combiné"
-st.markdown("<div class='header'>Pari combiné</div>", unsafe_allow_html=True)
+# Exemple de contenu pour les 3 matchs
+matches = [
+    {"player1": "Novak Djokovic", "player2": "Carlos Alcaraz", "odds_player1": 1.43, "odds_player2": 2.85},
+    {"player1": "Rafael Nadal", "player2": "Roger Federer", "odds_player1": 1.50, "odds_player2": 2.75},
+    {"player1": "Serena Williams", "player2": "Naomi Osaka", "odds_player1": 1.60, "odds_player2": 2.20}
+]
 
-# Conteneur pour la première box imbriquée
-with st.container():
-    st.markdown("<div class='sub-box'><b>Pavel Kotov - Lorenzo Sonego</b><br>Vainqueur: <b>P. Kotov</b><span class='cote'>2,20</span></div>", unsafe_allow_html=True)
+# Affichage des 3 matchs en colonnes
+col1, col2, col3 = st.columns(3)
 
-# Conteneur pour la deuxième box imbriquée
-with st.container():
-    st.markdown("<div class='sub-box'><b>Rinky Hijikata - David Goffin</b><br>Vainqueur: <b>D. Goffin</b><span class='cote'>1,60</span></div>", unsafe_allow_html=True)
+for col, match in zip([col1, col2, col3], matches):
+    with col:
+        st.markdown(f"""
+        <div class="match-box">
+            <div class="player-name">{match['player1']}</div>
+            <div class="player-name">vs</div>
+            <div class="player-name">{match['player2']}</div>
+            <div class="cote">{match['odds_player1']} | {match['odds_player2']}</div>
+        </div>
+        """, unsafe_allow_html=True)
 
-# Ajout d'un bouton de soumission
-if st.button('Valider ce combiné'):
-    st.success("Vous avez validé votre pari combiné.")
+# Bouton pour chaque match, avec alignement centré
+with col1:
+    if st.button(f"Cote {matches[0]['odds_player1']}"):
+        st.success(f"Vous avez choisi {matches[0]['player1']} avec une cote de {matches[0]['odds_player1']}.")
+
+with col2:
+    if st.button(f"Cote {matches[1]['odds_player1']}"):
+        st.success(f"Vous avez choisi {matches[1]['player1']} avec une cote de {matches[1]['odds_player1']}.")
+
+with col3:
+    if st.button(f"Cote {matches[2]['odds_player1']}"):
+        st.success(f"Vous avez choisi {matches[2]['player1']} avec une cote de {matches[2]['odds_player1']}.")
+
+# Ligne de séparation
+st.markdown("---")
