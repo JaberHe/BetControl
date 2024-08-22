@@ -29,6 +29,9 @@ block_size = 3
 start_index = st.session_state.current_block * block_size
 end_index = start_index + block_size
 
+# Définir une variable pour vérifier si toutes les cotes du bloc ont été choisies
+all_selected = True
+
 # Afficher les matchs actuels
 for match in matches[start_index:end_index]:
     match_key = f"{match['player1']} vs {match['player2']}"
@@ -44,9 +47,12 @@ for match in matches[start_index:end_index]:
                 "selected_odd": odd,
                 "sport": match['sport']
             }
+    # Vérifier si une sélection a été faite pour ce match
+    if match_key not in st.session_state.selections:
+        all_selected = False
 
 # Affichage du bouton "Suivant" si toutes les cotes du bloc sont sélectionnées
-if len(st.session_state.selections) >= (st.session_state.current_block + 1) * block_size:
+if all_selected:
     if st.button("Voir les 3 matchs suivants"):
         st.session_state.current_block += 1
         st.experimental_rerun()  # Redémarrer l'application avec le bloc suivant
