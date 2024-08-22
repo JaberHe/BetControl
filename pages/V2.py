@@ -59,3 +59,58 @@ with col2:
 
 # Ligne de séparation et espace pour la mise en page
 st.markdown("---")
+
+# CSS personnalisé pour le design
+st.markdown("""
+<style>
+/* Style de la box principale */
+.box {
+    background-color: #1e1e1e;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Style pour la ligne "Pari combiné" */
+.header {
+    font-size: 1.5em;
+    text-align: center;
+    margin-bottom: 10px;
+    background-color: #333333;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+}
+
+/* Style pour les box imbriquées */
+.sub-box {
+    background-color: #2e2e2e;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    color: white;
+}
+
+/* Style pour les cotes */
+.cote {
+    font-size: 1.2em;
+    text-align: right;
+    color: #f4d03f;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# Affichage du titre principal de la box "Pari combiné"
+st.markdown("<div class='header'>Pari combiné</div>", unsafe_allow_html=True)
+
+# Conteneur pour la première box imbriquée
+with st.container():
+    st.markdown("<div class='sub-box'><b>Pavel Kotov - Lorenzo Sonego</b><br>Vainqueur: <b>P. Kotov</b><span class='cote'>2,20</span></div>", unsafe_allow_html=True)
+
+# Conteneur pour la deuxième box imbriquée
+with st.container():
+    st.markdown("<div class='sub-box'><b>Rinky Hijikata - David Goffin</b><br>Vainqueur: <b>D. Goffin</b><span class='cote'>1,60</span></div>", unsafe_allow_html=True)
+
+# Ajout d'un bouton de soumission
+if st.button('Valider ce combiné'):
+    st.success("Vous avez validé votre pari combiné.")
