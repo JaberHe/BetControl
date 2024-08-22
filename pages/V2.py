@@ -18,7 +18,7 @@ matches = [
     {"player1": "Iga Swiatek", "player2": "Aryna Sabalenka", "odds": [1.55, 2.40], "sport": "Tennis"}
 ]
 
-# Variable pour suivre l'état de l'application
+# Initialiser les variables dans st.session_state
 if 'current_block' not in st.session_state:
     st.session_state.current_block = 0  # Index du bloc actuel
 if 'selections' not in st.session_state:
@@ -46,7 +46,7 @@ for match in matches[start_index:end_index]:
             }
 
 # Affichage du bouton "Suivant" si toutes les cotes du bloc sont sélectionnées
-if len(st.session_state.selections) >= end_index:
+if len(st.session_state.selections) >= (st.session_state.current_block + 1) * block_size:
     if st.button("Voir les 3 matchs suivants"):
         st.session_state.current_block += 1
         st.experimental_rerun()  # Redémarrer l'application avec le bloc suivant
@@ -59,4 +59,3 @@ for match_key, selection in st.session_state.selections.items():
 # Fin de l'affichage des blocs
 if st.session_state.current_block >= len(matches) // block_size:
     st.markdown("### Vous avez terminé de sélectionner les cotes pour tous les matchs.")
-
