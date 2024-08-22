@@ -31,31 +31,36 @@ mise = st.number_input('💰 Entrez votre mise moyenne (€):', min_value=0, ste
 st.markdown("---")  # Ligne de séparation
 
 # Filtrer les équipes par sport
-equipes_football = sorted(pd.concat([df_club[df_club['sport'] == 'football']['HomeTeam'], df_club[df_club['sport'] == 'football']['AwayTeam']]).unique())
-equipes_basket = sorted(pd.concat([df_club[df_club['sport'] == 'basket']['HomeTeam'], df_club[df_club['sport'] == 'basket']['AwayTeam']]).unique())
-equipes_tennis = sorted(pd.concat([df_club[df_club['sport'] == 'tennis']['HomeTeam'], df_club[df_club['sport'] == 'tennis']['AwayTeam']]).unique())
+equipes_football = sorted(pd.concat([df_club[df_club['sport'] == 'Football']['HomeTeam'], df_club[df_club['sport'] == 'Football']['AwayTeam']]).unique())
+equipes_basket = sorted(pd.concat([df_club[df_club['sport'] == 'Basket']['HomeTeam'], df_club[df_club['sport'] == 'Basket']['AwayTeam']]).unique())
+equipes_tennis = sorted(pd.concat([df_club[df_club['sport'] == 'Tennis']['HomeTeam'], df_club[df_club['sport'] == 'Tennis']['AwayTeam']]).unique())
 
 # Création de trois colonnes pour les différents sports
 col1, col2, col3 = st.columns(3)
 
 with col1:
     st.markdown("### ⚽ Football")
-    equipe_football = st.selectbox('Choisissez votre équipe de football', equipes_football)
+    equipe_football = st.selectbox('Choisissez votre équipe de football', [""] + equipes_football)
 
 with col2:
     st.markdown("### 🏀 Basket")
-    equipe_basket = st.selectbox('Choisissez votre équipe de basket', equipes_basket)
+    equipe_basket = st.selectbox('Choisissez votre équipe de basket', [""] + equipes_basket)
 
 with col3:
     st.markdown("### 🎾 Tennis")
-    equipe_tennis = st.selectbox('Choisissez votre équipe de tennis', equipes_tennis)
+    equipe_tennis = st.selectbox('Choisissez votre équipe de tennis', [""] + equipes_tennis)
 
 st.markdown("---")  # Ligne de séparation
 
 # Bouton pour soumettre le formulaire
 if st.button('Calculer'):
-    # Déterminer quelle équipe a été sélectionnée
-    equipe_selectionnee = equipe_football or equipe_basket or equipe_tennis
+    # Prioriser la sélection de l'équipe dans l'ordre des sports
+    if equipe_football:
+        equipe_selectionnee = equipe_football
+    elif equipe_basket:
+        equipe_selectionnee = equipe_basket
+    else:
+        equipe_selectionnee = equipe_tennis
     
     # Calculer le résultat
     result = gain_équipe(equipe_selectionnee, mise)
