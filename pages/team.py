@@ -29,10 +29,10 @@ def gain_équipe(equipe, mise):
     return round(result, 2), loss, first_match_date, last_match_date
 
 # Titre principal de l'application avec un style plus grand
-st.markdown("<h1 style='text-align: center; font-size: 3em;'> Coup de coeur !</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; font-size: 3em;'> Coup de coeur ❤️</h1>", unsafe_allow_html=True)
 
 # Sous-titre avec une police plus petite et espacée
-st.markdown("<h3 style='text-align: center;'>Choisissez votre équipe, votre mise et découvrez combien vous auriez gagné en pariant uniquement sur votre équipe </h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'>Choisissez votre équipe ou votre joueur de tennis préféré, renseignez votre mise et découvrez combien vous auriez gagné ou perdu en pariant uniquement sur votre équipe ou joueur de coeur </h3>", unsafe_allow_html=True)
 
 st.markdown("---")  # Ligne de séparation pour plus de clarté
 
@@ -59,7 +59,7 @@ with col2:
 
 with col3:
     st.markdown("### 🎾 Tennis")
-    equipe_tennis = st.selectbox('Choisissez votre équipe de tennis', [""] + equipes_tennis)
+    equipe_tennis = st.selectbox('Choisissez votre joueur de tennis', [""] + equipes_tennis)
 
 st.markdown("---")  # Ligne de séparation
 
@@ -77,7 +77,7 @@ if st.button('Calculer'):
     result, num_matches, first_match_date, last_match_date = gain_équipe(equipe_selectionnee, mise)
     
     # Affichage du résultat
-    st.write(f"💸 Pour une mise moyenne de **{mise}€**, vous auriez {'gagné' if result >= 0 else 'perdu'} **{abs(result)}€** en pariant sur **{equipe_selectionnee}**.")
-    st.write(f"Vous avez misé sur **{num_matches}** matchs.")
+    st.write(f"💸 Pour une mise de **{mise}€**, vous auriez {'gagné' if result >= 0 else 'perdu'} **{abs(result)}€** en pariant sur **{equipe_selectionnee}**.")
+    st.write(f"Vous auriez misé sur **{num_matches}** matchs.")
     if first_match_date and last_match_date:
         st.write(f"Le premier match a eu lieu le **{first_match_date}** et le dernier match le **{last_match_date}**.")
