@@ -37,6 +37,8 @@ st.markdown("""
 .cote-button-container {
     display: flex;
     justify-content: center;
+    position: relative;
+    margin-top: 5px; /* Espacement au-dessus */
 }
 
 .cote-button {
@@ -47,9 +49,17 @@ st.markdown("""
     border: none;
     border-radius: 10px;
     padding: 10px;
-    cursor: pointer;
     width: 80%; /* Ajuste la largeur pour un bon alignement */
-    margin-top: 5px; /* Espacement au-dessus */
+}
+
+button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* Rendre le bouton invisible mais cliquable */
+    cursor: pointer;
 }
 
 .cote-button:hover {
@@ -86,16 +96,16 @@ for col, match in zip([col1, col2, col3], matches):
         cols = st.columns(len(match['odds']))
         for i, odd in enumerate(match['odds']):
             with cols[i]:
-                # Créer un bouton caché qui capture l'interaction
-                if st.button(f" ", key=f"{match['player1']}_{match['player2']}_{odd}"):
+                # Créer un bouton HTML invisible superposé à la cote
+                if st.markdown(f"""
+                    <div class="cote-button-container">
+                        <form action="/" method="get">
+                            <button name="selected_odd" value="{match['player1']} vs {match['player2']} - {odd}"></button>
+                            <div class="cote-button">{odd}</div>
+                        </form>
+                    </div>
+                """, unsafe_allow_html=True):
                     selected_odds.append((match['player1'], match['player2'], odd))
-                
-                # Afficher la cote avec le CSS tout en associant la fonction du bouton
-                st.markdown(f"""
-                <div class="cote-button-container">
-                    <div class="cote-button">{odd}</div>
-                </div>
-                """, unsafe_allow_html=True)
 
 # Ligne de séparation
 st.markdown("---")
@@ -105,4 +115,5 @@ if selected_odds:
     st.markdown("### Cotes sélectionnées")
     for selection in selected_odds:
         st.write(f"Match: {selection[0]} vs {selection[1]} - Cote sélectionnée: {selection[2]}")
+
 
