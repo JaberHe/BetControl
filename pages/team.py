@@ -4,18 +4,29 @@ import streamlit as st
 # Chargement des données
 df_club = pd.read_csv("bet_equipe.csv")
 
-# Fonction pour calculer les gains ou pertes
+# Fonction pour calculer les gains ou pertes, le nombre de matchs, et les dates des premiers et derniers matchs
 def gain_équipe(equipe, mise):
     win = 0
     loss = 0
+    dates = []
+    
     for index, row in df_club.iterrows():
         if row["vainqueur"] == equipe:
-            win = win + row["odd_W"] 
+            win = win + row["odd_W"]
         if equipe in row["HomeTeam"] or equipe in row["AwayTeam"]:
-            loss = loss + 1 
+            loss = loss + 1
+            dates.append(row["date"])  # Ajouter la date du match à la liste
+    
     balance = win - loss
     result = balance * mise
-    return round(result, 2)
+    
+    if dates:  # Si la liste des dates n'est pas vide
+        first_match_date = min(dates)  # Date du premier match
+        last_match_date = max(dates)   # Date du dernier match
+    else:
+        first_match_date = last_match_date = None
+    
+    return round(result, 2), loss, first_match_date, last_match_date
 
 # Titre principal de l'application avec un style plus grand
 st.markdown("<h1 style='text-align: center; font-size: 3em;'> Coup de coeur !</h1>", unsafe_allow_html=True)
@@ -63,7 +74,10 @@ if st.button('Calculer'):
         equipe_selectionnee = equipe_tennis
     
     # Calculer le résultat
-    result = gain_équipe(equipe_selectionnee, mise)
+    result, num_matches, first_match_date, last_match_date = gain_équipe(equipe_selectionnee, mise)
     
     # Affichage du résultat
     st.write(f"💸 Pour une mise moyenne de **{mise}€**, vous auriez {'gagné' if result >= 0 else 'perdu'} **{abs(result)}€** en pariant sur **{equipe_selectionnee}**.")
+    st.write(f"Vous avez misé sur **{num_matches}** matchs.")
+    if first_match_date and last_match_date:
+        st.write(f"Le premier match a eu lieu le **{first_match_date}** et le dernier match le **{last_match_date}**.")
