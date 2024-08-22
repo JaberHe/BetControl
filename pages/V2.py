@@ -29,6 +29,9 @@ block_size = 3
 start_index = st.session_state.current_block * block_size
 end_index = start_index + block_size
 
+# Définir une variable pour savoir si un choix a été fait
+choice_made = False
+
 # Afficher les matchs actuels
 for match in matches[start_index:end_index]:
     st.markdown(f"### {match['player1']} vs {match['player2']}")
@@ -44,12 +47,12 @@ for match in matches[start_index:end_index]:
                 "sport": match['sport'],
                 "block": st.session_state.current_block + 1
             })
-            st.success(f"Sélectionnez {odd} pour {match['player1']} vs {match['player2']}.")
+            choice_made = True  # Un choix a été fait
 
-# Passer au bloc suivant après la sélection de tous les matchs du bloc actuel
-if len(st.session_state.selections) == end_index:
-    if st.button("Voir les 3 matchs suivants"):
-        st.session_state.current_block += 1
+# Passer automatiquement au bloc suivant après la sélection d'une cote
+if choice_made:
+    st.session_state.current_block += 1
+    st.experimental_rerun()  # Recharger l'application pour afficher les 3 matchs suivants
 
 # Affichage des sélections
 st.markdown("### Vos sélections actuelles")
