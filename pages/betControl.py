@@ -86,55 +86,51 @@ def calculate_losses_for_multiple_bets(df, sport, odds_interval, mise_moy, freq_
 #----------------------------------------------------------------------------
 
 
-#st.markdown(
+st.markdown(
     """
     <style>
-    .st-cq {
-        border: 1px solid green;  
-        background-color : green;
-    }
-
-    .st-emotion-cache-1vzeuhh {
-    background-color: green;
+    p, ol, ul, dl {
+    margin: 0px 10px 1rem;
+    padding: 0px;
+    font-size: large;
+    font-weight: 600;
+}
     
-    }
-    .st-e7 {
-        background: linear-gradient(to right, green 0%, green 20%, rgba(172, 177, 195, 0.25) 20%, rgba(172, 177, 195, 0.25) 100%);
-    color : green;
-    }
-    .st-e8 {
-        background: linear-gradient(to right, green 0%, green 40%, rgba(172, 177, 195, 0.25) 40%, rgba(172, 177, 195, 0.25) 100%);
-    color : green;
-    }
-    .st-e9 {
-        background: linear-gradient(to right, green 0%, green 60%, rgba(172, 177, 195, 0.25) 60%, rgba(172, 177, 195, 0.25) 100%);
-    color : green;
-    }
-    .st-ea {
-    background: linear-gradient(to right, green 0%, green 80%, rgba(172, 177, 195, 0.25) 80%, rgba(172, 177, 195, 0.25) 100%);
-    color : green;
-    }
-    .st-eb {
-    background: linear-gradient(to right, green 0%, green 100%, rgba(172, 177, 195, 0.25) 100%, rgba(172, 177, 195, 0.25) 100%);
-    color : green;
-    }
-    .st-emotion-cache-10y5sf6 {
-    
-    color: green;
-    }
-    .st-emotion-cache-15hul6a:hover {
-        border: 1px solid green;
-        color : green;
-    }
+.st-emotion-cache-qrm19w p {
+    word-break: break-word;
+    margin-bottom: 0px;
+    font-size: large;
+}
 
-    .focused.st-emotion-cache-19cfm8f.e116k4er3 {
-     border: 1px solid green;
-    }
+.st-bj {
+    margin-top: -0.7rem;
+}
 
+.st-bl {
+    margin-right: -135px;
+}
+
+.st-cq {
+    /* background-color: rgb(41, 105, 31); */
+}
+
+.st-e9 {
+     background-image: none
+}
+
+.st-an {
+    height: 3rem;
+    width: 10rem;
+}
+
+.st-emotion-cache-4l3iyp{
+    margin-left: 250px
+
+}
     </style>
     """,
     unsafe_allow_html=True
-#)
+)
 
 # Injecter du JavaScript pour forcer la couleur verte après le chargement
 
@@ -143,16 +139,27 @@ def calculate_losses_for_multiple_bets(df, sport, odds_interval, mise_moy, freq_
 st.markdown("<h2 style='text-align: center; font-size: 3em;'>Bienvenue dans BetControl !</h2>", unsafe_allow_html=True)
 
 # Sous-titre avec une police plus petite et espacée
-st.markdown("<h4 style='text-align: center;'>Définisser votre profil parieur en répondant aux questions suivantes. L'algorithme BetControl appliquera alors vos habitudes de jeu sur plus de 75 000 matchs et calculera vos espérances de gains en fonction de votre profil. </h4>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center;'>Définissez votre profil parieur en répondant aux questions suivantes. L'algorithme BetControl appliquera alors vos habitudes de jeu sur plus de 75 000 matchs et calculera vos espérances de gains en fonction de votre profil. </h4>", unsafe_allow_html=True)
 
 st.markdown("---")  # Ligne de séparation pour plus de clarté
 
 # Sélection des sports préférés
+# Sélection des sports préférés
 st.write('#### Sur quels sports aimez-vous pariez ?')
-st.write('Vous pouvez choisir plusieurs sport')
-football = st.checkbox("⚽ Football", key='football')
-basket = st.checkbox("🏀 Basket", key='basket')
-tennis = st.checkbox("🎾 Tennis", key='tennis')
+st.write('Vous pouvez choisir plusieurs sports')
+
+# Créer trois colonnes
+col1, col2, col3 = st.columns(3)
+
+# Placer un bouton dans chaque colonne
+
+
+col1, col2, col3 = st.columns(3)
+
+# Align checkboxes in columns
+football = col1.checkbox("⚽ Football", key='football')
+basket = col2.checkbox("🏀 Basket", key='basket')
+tennis = col3.checkbox("🎾 Tennis", key="tennis")
 
 sports = []
 if football:
@@ -170,8 +177,8 @@ else:
 
 st.markdown("---")  # Ligne de séparation
 
-# Slider pour le nombre de sélections
 st.write('#### Pari simple ou pari combiné ?')
+# Slider pour le nombre de sélections
 nb_selec = st.slider(
     'Combien de sélection mettez-vous en moyenne dans vos paris ? ',
     min_value=1,
@@ -181,6 +188,8 @@ nb_selec = st.slider(
 )
 
 st.markdown("---")  # Ligne de séparation
+
+
 
 # Sélection des cotes
 st.write('#### Favo ou surprise ?')
@@ -236,4 +245,4 @@ if st.button('Lancer le calcul'):
         result = calculate_losses_for_multiple_bets(df, sports, odds, mise_moy, freq_sem, nb_selec)
 
     # Affichage du résultat
-    st.write(f"💸 Pour une mise moyenne de **{mise_moy} €** et **{freq_sem}** paris par semaine, vous allez perdre en moyenne **{result}€** par an !")
+    st.write(f"💸 Pour une mise moyenne de **{mise_moy}€** et **{freq_sem}** paris par semaine, vous allez perdre en moyenne **{result}€** par an !")
