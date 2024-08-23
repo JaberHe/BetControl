@@ -140,15 +140,16 @@ def calculate_losses_for_multiple_bets(df, sport, odds_interval, mise_moy, freq_
 
 
 # Titre principal de l'application avec un style plus grand
-st.markdown("<h2 style='text-align: center; font-size: 3em;'>Bienvenue dans BetControl!</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; font-size: 3em;'>Bienvenue dans BetControl !</h2>", unsafe_allow_html=True)
 
 # Sous-titre avec une police plus petite et espacée
-st.markdown("<h3 style='text-align: center;'>Définisser votre profil parieur en répondant aux questions suivantes. L'algoithme BetControl appliquera alors vos habitudes de jeu sur plus de 75 000 matchs et calculera vos espérances de gains en fonction de votre profil. </h3>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center;'>Définisser votre profil parieur en répondant aux questions suivantes. L'algoithme BetControl appliquera alors vos habitudes de jeu sur plus de 75 000 matchs et calculera vos espérances de gains en fonction de votre profil. </h4>", unsafe_allow_html=True)
 
 st.markdown("---")  # Ligne de séparation pour plus de clarté
 
 # Sélection des sports préférés
-st.write('### Sur quels sports aimez-vous pariez ? (vous pouvez choisir plusieurs sport)')
+st.write('#### Sur quels sports aimez-vous pariez ?')
+st.write('vous pouvez choisir plusieurs sport')
 football = st.checkbox("⚽ Football", key='football')
 basket = st.checkbox("🏀 Basket", key='basket')
 tennis = st.checkbox("🎾 Tennis", key='tennis')
@@ -170,8 +171,9 @@ else:
 st.markdown("---")  # Ligne de séparation
 
 # Slider pour le nombre de sélections
+st.write('#### Pari simple ou pari combiné ?')
 nb_selec = st.slider(
-    '###Plutôt pari simple ou pari combiné ? Combien de sélection mettez-vous en moyenne dans vos paris ? ',
+    'Combien de sélection mettez-vous en moyenne dans vos paris ? ',
     min_value=1,
     max_value=6,
     value=1,
@@ -181,28 +183,28 @@ nb_selec = st.slider(
 st.markdown("---")  # Ligne de séparation
 
 # Sélection des cotes
-st.write('### Sélection des cotes')
+st.write('#### Favo ou surprise ?')
 categorie_cotes = st.radio(
-    '###Favo ou surprise ? Quand vous pariez, sur quel type de cote préférez-vous cliquer ?',
+    'Quand vous pariez, sur quel type de cote préférez-vous cliquer ?',
     (
-        'Gros favoris : cotes inférieures à 1,4',
-        'Légers favoris : cotes comprises entre 1,4 et 1,8',
-        'Cotes moyennes : cotes comprises entre 1,8 et 2,5',
-        'Légers outsiders : cotes comprises entre 2,5 et 4',
-        'Grosse suprise : cotes supérieures à 4'
+        'Gros favoris - cotes inférieures à 1,4',
+        'Légers favoris - cotes comprises entre 1,4 et 1,8',
+        'Cotes moyennes - cotes comprises entre 1,8 et 2,5',
+        'Légers outsiders - cotes comprises entre 2,5 et 4',
+        'Grosse suprise - cotes supérieures à 4'
     )
 )
 
 # Définir odds_lower et odds_upper en fonction de la catégorie sélectionnée
-if categorie_cotes == 'Gros favoris : cotes inférieures à 1,4':
+if categorie_cotes == 'Gros favoris - cotes inférieures à 1,4':
     odds_lower, odds_upper = 1, 1.4
-elif categorie_cotes == 'Légers favoris : cotes comprises entre 1,4 et 1,8':
+elif categorie_cotes == 'Légers favoris - cotes comprises entre 1,4 et 1,8':
     odds_lower, odds_upper = 1.4, 1.8
-elif categorie_cotes == 'Cotes moyennes : cotes comprises entre 1,8 et 2,5':
+elif categorie_cotes == 'Cotes moyennes - cotes comprises entre 1,8 et 2,5':
     odds_lower, odds_upper = 1.8, 2.5
-elif categorie_cotes ==  'Légers outsiders : cotes comprises entre 2,5 et 4':
+elif categorie_cotes ==  'Légers outsiders - cotes comprises entre 2,5 et 4':
     odds_lower, odds_upper = 2.5, 4
-elif categorie_cotes == 'Grosse suprise : cotes supérieures à 4':
+elif categorie_cotes == 'Grosse suprise - cotes supérieures à 4':
     odds_lower, odds_upper = 4, 120
 
 st.write(f'📊 Vous avez sélectionné la catégorie : **{categorie_cotes}**')
@@ -234,4 +236,4 @@ if st.button('Lancer le calcul'):
         result = calculate_losses_for_multiple_bets(df, sports, odds, mise_moy, freq_sem, nb_selec)
 
     # Affichage du résultat
-    st.write(f"### 💸 Pour une mise moyenne de **{mise_moy}€** et **{freq_sem}** paris par semaine, <b>vous allez perdre en moyenne **{result}€** par an !</b>")
+    st.write(f"#### 💸 Pour une mise moyenne de **{mise_moy}€** et **{freq_sem}** paris par semaine, vous allez perdre en moyenne **{result}€** par an !")
