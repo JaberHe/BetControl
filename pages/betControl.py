@@ -212,10 +212,10 @@ st.write(f'📊 Vous avez sélectionné la catégorie : **{categorie_cotes}**')
 st.markdown("---")  # Ligne de séparation
 
 # Entrée pour la mise moyenne
-mise_moy = st.number_input('###💰 Combien misez-vous en moyenne par pari ?', min_value=0, step=1, format="%d")
+mise_moy = st.number_input('💰 Combien misez-vous en moyenne par pari ?', min_value=0, step=1, format="%d")
 
 # Entrée pour la fréquence des paris
-freq_sem = st.number_input('###📅 Combien de paris faites-vous en moyenne par semaine ?', min_value=0)
+freq_sem = st.number_input('📅 Combien de paris faites-vous en moyenne par semaine ?', min_value=0)
 
 # Détermination de l'intervalle de cotes
 odds = pd.Interval(left=odds_lower, right=odds_upper, closed='both')
@@ -236,4 +236,4 @@ if st.button('Lancer le calcul'):
         result = calculate_losses_for_multiple_bets(df, sports, odds, mise_moy, freq_sem, nb_selec)
 
     # Affichage du résultat
-    st.write(f"#### 💸 Pour une mise moyenne de **{mise_moy}€** et **{freq_sem}** paris par semaine, vous allez perdre en moyenne **{result}€** par an !")
+    st.write(f"#####💸 Pour une mise moyenne de **{mise_moy} €** et **{freq_sem}** paris par semaine, vous allez perdre en moyenne **{result}€** par an !")
