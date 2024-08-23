@@ -200,7 +200,7 @@ categorie_cotes = st.radio(
         'Légers favoris - cotes comprises entre 1,4 et 1,8',
         'Cotes moyennes - cotes comprises entre 1,8 et 2,5',
         'Légers outsiders - cotes comprises entre 2,5 et 4',
-        'Grosse suprise - cotes supérieures à 4'
+        'Grosse surprise - cotes supérieures à 4'
     )
 )
 
