@@ -140,15 +140,15 @@ def calculate_losses_for_multiple_bets(df, sport, odds_interval, mise_moy, freq_
 
 
 # Titre principal de l'application avec un style plus grand
-st.markdown("<h1 style='text-align: center; font-size: 3em;'>🎯 Bienvenue dans BetControl!</h1>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; font-size: 3em;'>Bienvenue dans BetControl!</h2>", unsafe_allow_html=True)
 
 # Sous-titre avec une police plus petite et espacée
-st.markdown("<h3 style='text-align: center;'>Répondez à ce formulaire pour savoir combien vous avez économisé.</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'>Définisser votre profil parieur en répondant aux questions suivantes. L'algoithme BetControl appliquera alors vos habitudes de jeu sur plus de 75 000 matchs et calculera vos espérances de gains en fonction de votre profil. </h3>", unsafe_allow_html=True)
 
 st.markdown("---")  # Ligne de séparation pour plus de clarté
 
 # Sélection des sports préférés
-st.write('### Sélection des Sports')
+st.write('### Sur quels sports aimez-vous pariez ? (vous pouvez choisir plusieurs sport)')
 football = st.checkbox("⚽ Football", key='football')
 basket = st.checkbox("🏀 Basket", key='basket')
 tennis = st.checkbox("🎾 Tennis", key='tennis')
@@ -171,7 +171,7 @@ st.markdown("---")  # Ligne de séparation
 
 # Slider pour le nombre de sélections
 nb_selec = st.slider(
-    'Combien de sélections mettez-vous en moyenne sur vos paris (ex: 1 (simple) 1+ (multiple))',
+    '###Plutôt pari simple ou pari combiné ? Combien de sélection mettez-vous en moyenne dans vos paris ? ',
     min_value=1,
     max_value=6,
     value=1,
@@ -183,37 +183,37 @@ st.markdown("---")  # Ligne de séparation
 # Sélection des cotes
 st.write('### Sélection des cotes')
 categorie_cotes = st.radio(
-    'Choisissez une catégorie de cotes :',
+    '###Favo ou surprise ? Quand vous pariez, sur quel type de cote préférez-vous cliquer ?',
     (
-        'Grands favoris [inf 1.4]',
-        'Légers favoris [1.4 - 1.8]',
-        'Côtes moyennes [1.8 - 2.5]',
-        'Légers outsiders [2.5 - 4]',
-        'Grands outsiders [sup 4]'
+        'Gros favoris : cotes inférieures à 1,4',
+        'Légers favoris : cotes comprises entre 1,4 et 1,8',
+        'Cotes moyennes : cotes comprises entre 1,8 et 2,5',
+        'Légers outsiders : cotes comprises entre 2,5 et 4',
+        'Grosse suprise : cotes supérieures à 4'
     )
 )
 
 # Définir odds_lower et odds_upper en fonction de la catégorie sélectionnée
-if categorie_cotes == 'Grands favoris [inf 1.4]':
+if categorie_cotes == 'Gros favoris : cotes inférieures à 1,4':
     odds_lower, odds_upper = 1, 1.4
-elif categorie_cotes == 'Légers favoris [1.4 - 1.8]':
+elif categorie_cotes == 'Légers favoris : cotes comprises entre 1,4 et 1,8':
     odds_lower, odds_upper = 1.4, 1.8
-elif categorie_cotes == 'Côtes moyennes [1.8 - 2.5]':
+elif categorie_cotes == 'Cotes moyennes : cotes comprises entre 1,8 et 2,5':
     odds_lower, odds_upper = 1.8, 2.5
-elif categorie_cotes == 'Légers outsiders [2.5 - 4]':
+elif categorie_cotes ==  'Légers outsiders : cotes comprises entre 2,5 et 4':
     odds_lower, odds_upper = 2.5, 4
-elif categorie_cotes == 'Grands outsiders [sup 4]':
+elif categorie_cotes == 'Grosse suprise : cotes supérieures à 4':
     odds_lower, odds_upper = 4, 120
 
-st.write(f'📊 Vous avez sélectionné la catégorie: **{categorie_cotes}**')
+st.write(f'📊 Vous avez sélectionné la catégorie : **{categorie_cotes}**')
 
 st.markdown("---")  # Ligne de séparation
 
 # Entrée pour la mise moyenne
-mise_moy = st.number_input('💰 Entrez votre mise moyenne (€):', min_value=0, step=1, format="%d")
+mise_moy = st.number_input('###💰 Combien misez-vous en moyenne par pari ?', min_value=0, step=1, format="%d")
 
 # Entrée pour la fréquence des paris
-freq_sem = st.number_input('📅 Entrez votre fréquence de paris (par semaine):', min_value=0)
+freq_sem = st.number_input('###📅 Combien de paris faites-vous en moyenne par semaine ?', min_value=0)
 
 # Détermination de l'intervalle de cotes
 odds = pd.Interval(left=odds_lower, right=odds_upper, closed='both')
@@ -222,7 +222,7 @@ st.markdown("---")  # Ligne de séparation
 
 
 # Bouton pour soumettre le formulaire
-if st.button('Soumettre le formulaire'):
+if st.button('Lancer le calcul'):
 
     # Détermination du nombre d'itérations basé sur les cotes
     iterations = 10000 if odds_lower >= 4 else 1000
@@ -234,4 +234,4 @@ if st.button('Soumettre le formulaire'):
         result = calculate_losses_for_multiple_bets(df, sports, odds, mise_moy, freq_sem, nb_selec)
 
     # Affichage du résultat
-    st.write(f"💸 Pour une mise moyenne de **{mise_moy}€** et **{freq_sem}** paris par semaine, vous allez perdre en moyenne **{result}€** par an !")
+    st.write(f"### 💸 Pour une mise moyenne de **{mise_moy}€** et **{freq_sem}** paris par semaine, <b>vous allez perdre en moyenne **{result}€** par an !</b>")
