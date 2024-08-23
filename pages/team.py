@@ -36,13 +36,13 @@ nba_teams = {
     "tor" : "Toronto Raptors",
     "mil" : "Milwaukee Bucks",
     "atl" : "Atlanta Hawks"
-
     # Ajoute ici toutes les autres correspondances
 }
 
-# Remplacer les abréviations par les noms complets dans les colonnes HomeTeam et AwayTeam pour les équipes de basket
+# Remplacer les abréviations par les noms complets dans les colonnes HomeTeam, AwayTeam et vainqueur pour les équipes de basket
 df_club.loc[df_club['sport'] == 'basket', 'HomeTeam'] = df_club.loc[df_club['sport'] == 'basket', 'HomeTeam'].replace(nba_teams)
 df_club.loc[df_club['sport'] == 'basket', 'AwayTeam'] = df_club.loc[df_club['sport'] == 'basket', 'AwayTeam'].replace(nba_teams)
+df_club.loc[df_club['sport'] == 'basket', 'vainqueur'] = df_club.loc[df_club['sport'] == 'basket', 'vainqueur'].replace(nba_teams)
 
 # Fonction pour calculer les gains ou pertes, le nombre de matchs, et les dates des premiers et derniers matchs
 def gain_équipe(equipe, mise):
