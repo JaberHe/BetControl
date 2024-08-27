@@ -236,7 +236,7 @@ st.markdown("---")  # Ligne de séparation
 if st.button('Lancer le calcul'):
 
     # Détermination du nombre d'itérations basé sur les cotes
-    iterations = 10000 if odds_lower >= 4 else 1000
+    iterations = 10000 if odds_lower >= 3 else 1000
 
     # Calcul des pertes potentielles
     if nb_selec == 1:
