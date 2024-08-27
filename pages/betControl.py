@@ -38,7 +38,7 @@ def calculate_losses_for_multiple_bets(df, sport, odds_interval, mise_moy, freq_
     """
     Calcul des pertes pour des paris multiples
     """
-    iterations = 1000
+    iterations = 10000
     total_result = 0
     total_nb_paris = 0
 
