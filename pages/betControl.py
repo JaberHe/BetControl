@@ -246,3 +246,6 @@ if st.button('Lancer le calcul'):
 
     # Affichage du résultat
     st.write(f"💸 Pour une mise moyenne de **{mise_moy}€** et **{freq_sem}** paris par semaine, vous allez perdre en moyenne **{result}€** par an !")
+
+st.markdown("---")  # Ligne de séparation
+st.write("[Analyse](https://betcontrolv1.streamlit.app/betControl)")
