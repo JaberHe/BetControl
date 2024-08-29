@@ -145,7 +145,7 @@ st.markdown("---")  # Ligne de séparation pour plus de clarté
 
 # Sélection des sports préférés
 # Sélection des sports préférés
-st.write('#### Sur quels sports aimez-vous pariez ?')
+st.write('#### Sur quels sports aimez-vous parier ?')
 st.write('Vous pouvez choisir plusieurs sports')
 
 # Créer trois colonnes
@@ -180,7 +180,7 @@ st.markdown("---")  # Ligne de séparation
 st.write('#### Pari simple ou pari combiné ?')
 # Slider pour le nombre de sélections
 nb_selec = st.slider(
-    'Combien de sélection mettez-vous en moyenne dans vos paris ? ',
+    'Combien de sélections mettez-vous en moyenne dans vos paris ? ',
     min_value=1,
     max_value=6,
     value=1,
