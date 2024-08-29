@@ -124,3 +124,6 @@ if st.button('Calculer'):
     st.write(f"Vous auriez misé sur **{num_matches}** matchs.")
     if first_match_date and last_match_date:
         st.write(f"Le premier match a eu lieu le **{first_match_date}** et le dernier match le **{last_match_date}**.")
+
+st.markdown("---")  # Ligne de séparation
+st.write("[Analyse](https://lookerstudio.google.com/u/0/reporting/3c93ea05-4bc6-487b-9412-33ac6b04b444/page/p_cui22erkkd)")
